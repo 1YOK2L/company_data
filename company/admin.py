@@ -3,6 +3,10 @@ from django.contrib import admin
 # Register your models here.
 from .models import Company, Customer, ShippingAddress
 
+@admin.action(description="Mark selected stories as published")
+def make_published(modeladmin, request, queryset):
+    queryset.update(status="p")
+
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ("logo", "name", "address", "tax_number", "email", "phone")
