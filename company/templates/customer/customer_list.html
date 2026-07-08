@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customers</title>
+</head>
+<body>
+    <h1>Customer List</h1>
+
+    <table border="1">
+        <tr>
+            <th>Company</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Tax Number</th>
+            <th>Branch</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.company.name }}</td>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.address }}</td>
+            <td>{{ customer.tax_number }}</td>
+            <td>{{ customer.branch }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.phone }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">No customers found.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

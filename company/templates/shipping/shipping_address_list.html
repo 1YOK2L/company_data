@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shipping Addresses</title>
+</head>
+<body>
+    <h1>Shipping Address List</h1>
+
+    <table border="1">
+        <tr>
+            <th>Customer</th>
+            <th>Company</th>
+            <th>Contact Name</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Subdistrict</th>
+            <th>District</th>
+            <th>Province</th>
+            <th>Zip Code</th>
+        </tr>
+
+        {% for shipping in shipping_addresses %}
+        <tr>
+            <td>{{ shipping.customer.name }}</td>
+            <td>{{ shipping.customer.company.name }}</td>
+            <td>{{ shipping.contact_name }}</td>
+            <td>{{ shipping.phone }}</td>
+            <td>{{ shipping.address }}</td>
+            <td>{{ shipping.subdistrict }}</td>
+            <td>{{ shipping.district }}</td>
+            <td>{{ shipping.province }}</td>
+            <td>{{ shipping.zip_code }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="9">No shipping addresses found.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
