@@ -1,37 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Customers</title>
+    <meta charset="UTF-8">
+    <title>Shipping Label</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:#eee;
+            padding:30px;
+        }
+
+        .page{
+            width:210mm;
+            min-height:297mm;
+            margin:auto;
+            background:white;
+            padding:25mm;
+        }
+
+        .header{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            margin-bottom:40px;
+        }
+
+        .company{
+            display:flex;
+        }
+
+        .logo{
+            width:90px;
+            margin-right:18px;
+        }
+
+        .company-info{
+            font-size:14px;
+            line-height:1.8;
+        }
+
+        .phone-box{
+            border:2px solid #222;
+            padding:10px 18px;
+            font-size:18px;
+            font-weight:bold;
+        }
+
+        .title{
+            text-align:center;
+            font-size:24px;
+            margin-bottom:30px;
+            font-weight:bold;
+        }
+
+        .address{
+            width:80%;
+            margin:auto;
+            font-size:22px;
+            line-height:2;
+        }
+
+        .zipcode{
+            display:flex;
+            align-items:center;
+            margin-top:35px;
+            gap:12px;
+        }
+
+        .zipcode span{
+            font-size:18px;
+        }
+
+        .box{
+            width:48px;
+            height:55px;
+            border:2px solid #222;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-size:28px;
+            font-weight:bold;
+        }
+
+        @media print{
+            body{
+                background:white;
+                padding:0;
+            }
+
+            .page{
+                width:100%;
+                margin:0;
+                padding:20mm;
+                box-shadow:none;
+            }
+        }
+
+    </style>
+
 </head>
+
 <body>
-    <h1>Customer List</h1>
 
-    <table border="1">
-        <tr>
-            <th>Company</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Tax Number</th>
-            <th>Branch</th>
-            <th>Email</th>
-            <th>Phone</th>
-        </tr>
+{% for customer in customers %}
 
-        {% for customer in customers %}
-        <tr>
-            <td>{{ customer.company.name }}</td>
-            <td>{{ customer.name }}</td>
-            <td>{{ customer.address }}</td>
-            <td>{{ customer.tax_number }}</td>
-            <td>{{ customer.branch }}</td>
-            <td>{{ customer.email }}</td>
-            <td>{{ customer.phone }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="7">No customers found.</td>
-        </tr>
+<div class="page">
+
+    <div class="header">
+
+        <div class="company">
+
+            <img src="{{ customer.company.logo.url }}" class="logo">
+
+            <div class="company-info">
+
+                <strong>{{ customer.company.name }}</strong><br>
+
+                {{ customer.company.address }}<br>
+
+                Email {{ customer.company.email }}
+                &nbsp;&nbsp;
+                โทร {{ customer.company.phone }}
+
+            </div>
+
+        </div>
+
+        <div class="phone-box">
+            ☎ {{ customer.phone }}
+        </div>
+
+    </div>
+
+    <div class="title">
+        ชื่อและที่อยู่ผู้รับ / Addressee
+    </div>
+
+    <div class="address">
+
+        {{ customer.name }}<br>
+
+        {{ customer.address }}<br>
+
+        {% if customer.subdistrict %}
+            ต.{{ customer.subdistrict }}
+        {% endif %}
+
+        {% if customer.district %}
+            อ.{{ customer.district }}
+        {% endif %}
+
+        {% if customer.province %}
+            {{ customer.province }}
+        {% endif %}
+
+    </div>
+
+    <div class="zipcode">
+
+        <span>รหัสไปรษณีย์</span>
+
+        {% for digit in customer.zip_code|stringformat:"s" %}
+            <div class="box">{{ digit }}</div>
         {% endfor %}
-    </table>
+
+    </div>
+
+</div>
+
+{% if not forloop.last %}
+<div style="page-break-after:always;"></div>
+{% endif %}
+
+{% endfor %}
+
 </body>
 </html>
