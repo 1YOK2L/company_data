@@ -6,7 +6,7 @@ from .models import Company, Customer, ShippingAddress
 
 @admin.action(description="Mark selected stories as published")
 def make_published(modeladmin, request, queryset):
-    customers = queryset.select_related("company").prefetch_related("shippingaddress_set")
+    customers = []
     return render(
         request,
         "customer/customer_list.html",

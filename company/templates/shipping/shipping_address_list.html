@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Shipping Addresses</title>
@@ -37,5 +37,255 @@
         </tr>
         {% endfor %}
     </table>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Shipping Label</title>
+
+@font-face {
+    font-family: 'TH Sarabun New';
+    src: url('/static/fonts/THSarabunNew.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TH Sarabun New';
+    src: url('/static/fonts/THSarabunNew-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TH Sarabun New';
+    src: url('/static/fonts/THSarabunNew-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'TH Sarabun New';
+    src: url('/static/fonts/THSarabunNew-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+{% load static %}
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+@page{
+    size:A4;
+    margin:0;
+}
+
+body{
+    background:#efefef;
+    font-family:'TH Sarabun New', sans-serif;
+    padding:15mm;
+}
+
+.page{
+    width:210mm;
+    min-height:297mm;
+    margin:auto;
+    background:#fff;
+    padding:18mm 22mm;
+    box-shadow:0 0 15px rgba(0,0,0,.15);
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+.company{
+    display:flex;
+}
+
+.logo{
+    width:75px;
+    margin-right:15px;
+}
+
+.company-info{
+    font-size:13px;
+    line-height:1.7;
+    color:#333;
+}
+
+.company-info strong{
+    display:block;
+    font-size:18px;
+    margin-bottom:3px;
+}
+
+.phone-box{
+    border:2px solid #444;
+    padding:10px 18px;
+    min-width:230px;
+    text-align:center;
+    font-size:14px;
+}
+
+.phone-box strong{
+    font-size:18px;
+}
+
+.title{
+    margin-top:30px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.title span{
+    font-size:18px;
+    font-weight:400;
+}
+
+.address{
+    margin-top:30px;
+    margin-left:80px;
+    font-size:24px;
+    line-height:2;
+    color:#222;
+}
+
+.address strong{
+    font-size:26px;
+}
+
+.zipcode{
+    margin-top:40px;
+    display:flex;
+    align-items:center;
+}
+
+.zipcode span{
+    font-size:18px;
+    margin-right:15px;
+}
+
+.box{
+    width:15mm;
+    height:15mm;
+    border:2px solid #444;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:26px;
+    font-weight:bold;
+    margin-right:-2px;
+}
+
+@media print{
+
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .page{
+        margin:0;
+        box-shadow:none;
+        page-break-after:always;
+    }
+
+    .page:last-child{
+        page-break-after:auto;
+    }
+
+}
+</style>
+
+</head>
+
+<body>
+
+{% for customer in customers %}
+
+<div class="page">
+
+    <div class="header">
+
+        <div class="company">
+
+            <img src="{{ customer.company.logo.url }}" class="logo">
+
+            <div class="company-info">
+
+                <strong>{{ customer.company.name }}</strong>
+
+                {{ customer.company.address }}<br>
+
+                อีเมล {{ customer.company.email }}
+                &nbsp;&nbsp;
+                โทร {{ customer.company.phone }}
+
+            </div>
+
+        </div>
+
+        <div class="phone-box">
+            สำหรับติดต่อผู้ส่ง<br>
+            <strong>☎ {{ customer.phone }}</strong>
+        </div>
+
+    </div>
+
+    <div class="title">
+        ชื่อและที่อยู่ผู้รับ
+        <span>/ Addressee</span>
+    </div>
+
+    <div class="address">
+
+        <strong>{{ customer.name }}</strong><br>
+
+        {{ customer.address }}<br>
+
+        {% if customer.subdistrict %}
+            ต.{{ customer.subdistrict }}
+        {% endif %}
+
+        {% if customer.district %}
+            อ.{{ customer.district }}
+        {% endif %}
+
+        {% if customer.province %}
+            {{ customer.province }}
+        {% endif %}
+
+    </div>
+
+    <div class="zipcode">
+
+        <span>รหัสไปรษณีย์</span>
+
+        {% for digit in customer.zip_code|stringformat:"s" %}
+            <div class="box">{{ digit }}</div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% if not forloop.last %}
+<div style="page-break-after:always;"></div>
+{% endif %}
+
+{% endfor %}
+
 </body>
 </html>
