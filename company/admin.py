@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.shortcuts import render
 
 # Register your models here.
-from .models import Company, Customer, ShippingAddress, Province
+from .models import Company, Customer, District, ShippingAddress, Province, Subdistrict
 
 @admin.action(description="Mark selected stories as published")
 def make_published(modeladmin, request, queryset):
@@ -31,5 +31,15 @@ class ShippingAdmin(admin.ModelAdmin):
 
 @admin.register(Province)
 class ProvinceAdmin(admin.ModelAdmin):
+    list_display = ("name_th", "name_en", "id")
+    search_fields = ("name_th", "name_en")
+
+@admin.register(District)
+class DistrictAdmin(admin.ModelAdmin):
+    list_display = ("name_th", "name_en", "id")
+    search_fields = ("name_th", "name_en")
+
+@admin.register(Subdistrict)
+class SubdistrictAdmin(admin.ModelAdmin):
     list_display = ("name_th", "name_en", "id")
     search_fields = ("name_th", "name_en")

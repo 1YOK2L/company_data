@@ -47,6 +47,20 @@ class ShippingAddress(models.Model):
     def __str__(self):
         return f"{self.customer.name} - {self.contact_name}"
 
+class Subdistrict(models.Model):
+    name_th = models.CharField(max_length=255)
+    name_en = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.name_th}, {self.name_en}"
+    
+class District(models.Model):
+    name_th = models.CharField(max_length=255)
+    name_en = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.name_th}, {self.name_en}"
+
 class Province(models.Model):
     name_th = models.CharField(max_length=255)
     name_en = models.CharField(max_length=255)
