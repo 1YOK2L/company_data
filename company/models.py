@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.db import models
 
 # Create your models here.
@@ -47,23 +49,36 @@ class ShippingAddress(models.Model):
     def __str__(self):
         return f"{self.customer.name} - {self.contact_name}"
 
-class Subdistrict(models.Model):
-    name_th = models.CharField(max_length=255)
-    name_en = models.CharField(max_length=255)
-
-    def __str__(self):
-        return f"{self.name_th}, {self.name_en}"
-    
-class District(models.Model):
-    name_th = models.CharField(max_length=255)
-    name_en = models.CharField(max_length=255)
-
-    def __str__(self):
-        return f"{self.name_th}, {self.name_en}"
-
 class Province(models.Model):
+    id = models.UUIDField(default=uuid4, editable=False, primary_key=True, unique=True)
     name_th = models.CharField(max_length=255)
     name_en = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.name_th}, {self.name_en}"
+
+class District(models.Model):
+    id = models.UUIDField(default=uuid4, editable=False, primary_key=True, unique=True)
+    name_th = models.CharField(max_length=255)
+    name_en = models.CharField(max_length=255)
+    province = models.ForeignKey(
+        "Province",
+        on_delete=models.CASCADE,
+        related_name="districts"
+    )
+
+    def __str__(self):
+        return f"{self.name_th}, {self.name_en}"
+
+class Subdistrict(models.Model):
+    id = models.UUIDField(default=uuid4, editable=False, primary_key=True, unique=True)
+    name_th = models.CharField(max_length=255)
+    name_en = models.CharField(max_length=255)
+    district = models.ForeignKey(
+        "District",
+        on_delete=models.CASCADE,
+        related_name="subdistricts"
+    )
 
     def __str__(self):
         return f"{self.name_th}, {self.name_en}"

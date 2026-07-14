@@ -31,15 +31,15 @@ class ShippingAdmin(admin.ModelAdmin):
 
 @admin.register(Province)
 class ProvinceAdmin(admin.ModelAdmin):
-    list_display = ("name_th", "name_en", "id")
+    list_display = ("id", "name_th", "name_en")
     search_fields = ("name_th", "name_en")
 
 @admin.register(District)
 class DistrictAdmin(admin.ModelAdmin):
-    list_display = ("name_th", "name_en", "id")
+    list_display = ("id", "name_th", "name_en")
     search_fields = ("name_th", "name_en")
 
 @admin.register(Subdistrict)
 class SubdistrictAdmin(admin.ModelAdmin):
-    list_display = ("name_th", "name_en", "id")
+    list_display = ("id", "name_th", "name_en")
     search_fields = ("name_th", "name_en")
