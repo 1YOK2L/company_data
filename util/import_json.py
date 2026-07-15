@@ -7,9 +7,9 @@ def run(*arg):
     try:
         province_dict = {}
         district_dict = {}
-
+        
         with transaction.atomic():
-            with open('fixtures/provinces.json', 'r') as file:
+            with open('util/province.json', 'r') as file:
                 data = json.load(file)
                 for province in data:
                     raw_data = Province.objects.create(
@@ -18,7 +18,7 @@ def run(*arg):
                     )
                     province_dict[province['id']] = raw_data
 
-            with open('fixtures/districts.json', 'r') as file:
+            with open('util/district.json', 'r') as file:
                 data = json.load(file)
                 for district in data:
                     raw_data = District.objects.create(
@@ -28,14 +28,15 @@ def run(*arg):
                     )
                     district_dict[district['id']] = raw_data
 
-            with open('fixtures/sub_districts.json', 'r') as file:
+            with open('util/subdistrict.json', 'r') as file:
                 data = json.load(file)
                 for sub_district in data:
+                    district = district_dict[sub_district["district_id"]]
                     raw_data = Subdistrict.objects.create(
                         name_th=sub_district["name_th"],
                         name_en=sub_district["name_en"],
-                        zip_code=sub_district["zip_code"],
-                        district=district_dict[sub_district['district_id']]
+                        district=district,
+                        zip_code=sub_district.get("zip_code", None)
                     )
 
     except Exception as e:
