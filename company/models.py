@@ -33,27 +33,38 @@ class Customer(models.Model):
         return self.name
     
 class ShippingAddress(models.Model):
-    id = models.UUIDField(default=uuid4, editable=False, primary_key=True, unique=True)
+    id = models.UUIDField(default=uuid4, editable=False, primary_key=True)
+
     customer = models.ForeignKey(
         Customer,
         on_delete=models.CASCADE,
         related_name="shipping_addresses"
     )
+
     contact_name = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    # subdistrict = models.ForeignKey(
-    #     "Subdistrict",
-    #     on_delete=models.CASCADE,
-    #     related_name="shipping_addresses"
-    # )
-    subdistrict = models.CharField(max_length=255)
-    district = models.CharField(max_length=255)
-    province = models.CharField(max_length=255)
-    zip_code = models.CharField(max_length=255)
+
+    subdistrict = models.ForeignKey(
+        "Subdistrict",
+        on_delete=models.PROTECT,
+        related_name="shipping_addresses"
+    )
 
     def __str__(self):
         return f"{self.customer.name} - {self.contact_name}"
+
+    @property
+    def district(self):
+        return self.subdistrict.district
+
+    @property
+    def province(self):
+        return self.subdistrict.district.province
+
+    @property
+    def zip_code(self):
+        return self.subdistrict.zip_code
 
 class Province(models.Model):
     id = models.UUIDField(default=uuid4, editable=False, primary_key=True, unique=True)
@@ -80,7 +91,7 @@ class Subdistrict(models.Model):
     id = models.UUIDField(default=uuid4, editable=False, primary_key=True, unique=True)
     name_th = models.CharField(max_length=255)
     name_en = models.CharField(max_length=255)
-    zip_code = models.CharField(max_length=10, null=True, blank=True)
+    zip_code = models.CharField(max_length=5)
     district = models.ForeignKey(
         "District",
         on_delete=models.CASCADE,

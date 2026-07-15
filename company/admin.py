@@ -4,9 +4,8 @@ from django.shortcuts import render
 # Register your models here.
 from .models import Company, Customer, District, ShippingAddress, Province, Subdistrict
 
-@admin.action(description="Mark selected stories as published")
-def make_published(modeladmin, request, queryset):
-    customers = []
+def report_customers(modeladmin, request, queryset):
+    customers = queryset
     return render(
         request,
         "customer/customer_list.html",
@@ -27,7 +26,7 @@ class CustomerAdmin(admin.ModelAdmin):
 class ShippingAdmin(admin.ModelAdmin):
     list_display = ("contact_name", "phone", "address", "subdistrict", "district", "province", "zip_code")
     search_fields = ("contact_name", "phone")
-    actions = [make_published]
+    actions = [report_customers]
 
 @admin.register(Province)
 class ProvinceAdmin(admin.ModelAdmin):
