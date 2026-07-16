@@ -213,7 +213,7 @@ body{
 
 <body>
 
-{% for customer in customers %}
+{% for shipping in shipping_addresses %}
 
 <div class="page">
 
@@ -221,17 +221,17 @@ body{
 
         <div class="company">
 
-            <img src="{{ customer.company.logo.url }}" class="logo">
+            <img src="{{ shipping.customer.company.logo.url }}" class="logo">
 
             <div class="company-info">
 
-                <strong>{{ customer.company.name }}</strong>
+                <strong>{{ shipping.contact_name }}</strong>
 
-                {{ customer.company.address }}<br>
+                {{ shipping.customer.company.address }}<br>
 
-                อีเมล {{ customer.company.email }}
+                อีเมล {{ shipping.customer.company.email }}
                 &nbsp;&nbsp;
-                โทร {{ customer.company.phone }}
+                โทร {{ shipping.customer.company.phone }}
 
             </div>
 
@@ -239,7 +239,7 @@ body{
 
         <div class="phone-box">
             สำหรับติดต่อผู้ส่ง<br>
-            <strong>☎ {{ customer.phone }}</strong>
+            <strong>☎ {{ shipping.customer.phone }}</strong>
         </div>
 
     </div>
@@ -251,20 +251,20 @@ body{
 
     <div class="address">
 
-        <strong>{{ customer.name }}</strong><br>
+        <strong>{{ shipping.contact_name }}</strong><br>
 
-        {{ customer.address }}<br>
+        {{ shipping.address }}<br>
 
-        {% if customer.subdistrict %}
-            ต.{{ customer.subdistrict }}
+        {% if shipping.subdistrict %}
+            ต.{{ shipping.subdistrict }}
         {% endif %}
 
-        {% if customer.district %}
-            อ.{{ customer.district }}
+        {% if shipping.district %}
+            อ.{{ shipping.district }}
         {% endif %}
 
-        {% if customer.province %}
-            จ.{{ customer.province }}
+        {% if shipping.province %}
+            จ.{{ shipping.province }}
         {% endif %}
 
     </div>
@@ -273,7 +273,7 @@ body{
 
         <span>รหัสไปรษณีย์</span>
 
-        {% for digit in customer.zip_code|stringformat:"s" %}
+        {% for digit in shipping.zip_code|stringformat:"s" %}
             <div class="box">{{ digit }}</div>
         {% endfor %}
 
