@@ -15,7 +15,7 @@ def report_customers(modeladmin, request, queryset):
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ("logo", "name", "address", "tax_number", "email", "phone")
+    list_display = ("name", "logo", "address", "tax_number", "email", "phone")
     search_fields = ("name", "tax_number", "phone")
 
 @admin.register(Customer)

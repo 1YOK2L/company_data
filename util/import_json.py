@@ -28,7 +28,7 @@ def run(*arg):
                     )
                     district_dict[district['id']] = raw_data
 
-            with open('util/subdistrict.json', 'r') as file:
+            with open('util/subdistrict.json', 'r', encoding='utf-8') as file:
                 data = json.load(file)
                 for sub_district in data:
                     district = district_dict[sub_district["district_id"]]
@@ -36,7 +36,7 @@ def run(*arg):
                         name_th=sub_district["name_th"],
                         name_en=sub_district["name_en"],
                         district=district,
-                        zip_code=sub_district.get("zip_code", None)
+                        zip_code=str(sub_district["zip_code"]).zfill(5)
                     )
 
     except Exception as e:

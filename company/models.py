@@ -1,6 +1,6 @@
 from uuid import uuid4
-
 from django.db import models
+
 
 # Create your models here.
 class Company(models.Model):
@@ -65,6 +65,28 @@ class ShippingAddress(models.Model):
     @property
     def zip_code(self):
         return self.subdistrict.zip_code
+    
+    @property
+    def formatted_location(self):
+        if self.province.name_th == "กรุงเทพมหานคร":
+            if self.district.name_th[:3] == "เขต":
+                return (
+                    f"แขวง{self.subdistrict.name_th} "
+                    f"{self.district.name_th} "
+                    f"{self.province.name_th}"
+                )
+            else:
+                return (
+                    f"แขวง{self.subdistrict.name_th} "
+                    f"เขต{self.district.name_th} "
+                    f"{self.province.name_th}"
+                )
+
+        return (
+            f"ต.{self.subdistrict.name_th} "
+            f"อ.{self.district.name_th} "
+            f"จ.{self.province.name_th}"
+        )
 
 class Province(models.Model):
     id = models.UUIDField(default=uuid4, editable=False, primary_key=True, unique=True)

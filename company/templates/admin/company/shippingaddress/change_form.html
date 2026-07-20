@@ -1,0 +1,17 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block submit_buttons_bottom %}
+
+{{ block.super }}
+
+{% if original.pk %}
+<div class="submit-row">
+    <a class="button"
+       href="{% url 'admin:company_shippingaddress_print' original.pk %}">
+        {% trans "Report / Export" %}
+    </a>
+</div>
+{% endif %}
+
+{% endblock %}
