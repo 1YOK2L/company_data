@@ -43,41 +43,41 @@ body{
 }
 
 .logo{
-    width:100px;
+    width:125px;
     margin-right:12px;
     object-fit:contain;
 }
 
 .company-info{
-    font-size:16px;
+    font-size:20px;
     line-height:1.45;
     color:#222;
 }
 
 .company-info strong{
     display:block;
-    font-size:18.75px;
+    font-size:23.4375px;
     font-weight:700;
     margin-bottom:2px;
 }
 
 .title-row{
-    margin-top:18px;
+    margin-top:80px;
     display:flex;
-    justify-content:center;
+    justify-content:left;
     align-items:center;
     position:relative;
 }
 
 .title{
-    font-size:24px;
+    font-size:30px;
     font-weight:700;
-    
+    margin-left:300px;
+    margin-right:20px;
 }
 
 .phone-box{
-    position:absolute;
-    right:0;
+    margin-left:20px;
     border:1.5px solid #444;
     padding:6px 14px;
     font-size:24px;
@@ -87,7 +87,7 @@ body{
 
 .address{
     margin-top:18px;
-    margin-left:72px;
+    margin-left:360px;
     font-size:24px;
     line-height:1.5;
     color:#222;
@@ -100,7 +100,7 @@ body{
 
 .zipcode{
     margin-top:18px;
-    margin-left:72px;
+    margin-left:300px;
     display:flex;
     align-items:flex-end;
 }
@@ -109,6 +109,7 @@ body{
     font-size:20px;
     line-height:1.2;
     margin-right:10px;
+    text-align:center;
 }
 
 .box{
@@ -170,7 +171,7 @@ body{
         </div>
 
         <div class="phone-box">
-            📞 สำหรับติดต่อผู้ส่ง / Tel. : {{ shipping.customer.phone }}
+            📞 สำหรับติดต่อผู้ส่ง / Tel. : {{ shipping.phone }}
         </div>
     </div>
 
@@ -178,7 +179,7 @@ body{
 
         <strong>{{ shipping.contact_name }}</strong><br>
 
-        {{ shipping.address }}<br>
+        {{ shipping.address }}
 
         {{ shipping.formatted_location }}
 
