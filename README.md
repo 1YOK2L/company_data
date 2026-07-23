@@ -25,7 +25,7 @@
 8.  Apply migrations
     python manage.py makemigrations
     python manage.py migrate
-9.  Import Thailand location data
+9.  Import Thailand location data (location, subdistrict, district, province, zip code)
 10. Create superuser (if needed)
 11. Run development server
     python manage.py runserver 0.0.0.0:8000

@@ -5,14 +5,6 @@ from django.urls import path
 # Register your models here.
 from .models import Company, Customer, District, ShippingAddress, Province, Subdistrict
 
-def report_customers(modeladmin, request, queryset):
-    customers = queryset
-    return render(
-        request,
-        "customer/customer_list.html",
-        {"customers": customers},
-    )
-
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ("name", "logo", "address", "tax_number", "email", "phone")

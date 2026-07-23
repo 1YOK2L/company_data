@@ -13,19 +13,6 @@ def company_list(request):
         },
     )
 
-
-def customer_list(request):
-    customers = Customer.objects.select_related("company")
-
-    return render(
-        request,
-        "customer/customer_list.html",
-        {
-            "customers": customers,
-        },
-    )
-
-
 def shipping_address_list(request):
     shipping_addresses = ShippingAddress.objects.select_related(
         "customer",
