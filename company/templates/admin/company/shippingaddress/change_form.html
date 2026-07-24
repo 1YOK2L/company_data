@@ -9,7 +9,14 @@
 <div class="submit-row">
     <a class="button"
        href="{% url 'admin:company_shippingaddress_print' original.pk %}">
-        {% trans "Report / Export" %}
+        {% trans "Report / Export as letter" %}
+    </a>
+</div>
+
+<div class="submit-row">
+    <a class="button"
+       href="{% url 'admin:company_shippingaddress_print_a4' original.pk %}">
+        {% trans "Report / Export as A4" %}
     </a>
 </div>
 {% endif %}
